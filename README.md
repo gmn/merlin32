@@ -11,6 +11,16 @@ The Merlin 32 assembler for the Apple II from Brutal Deluxe Software. More infor
 4. <code>./run-this-to-install</code>
 5. Enter your password.
 
+### macOS: clearing the Gatekeeper warning
+
+The macOS binary is not signed or notarized, so on first run you may see:
+
+> Apple could not verify "merlin32" is free of malware that may harm your Mac or compromise your privacy.
+
+Remove the quarantine attribute to allow it to run:
+
+<code>xattr -dr com.apple.quarantine /path/to/merlin32</code>
+
 ## Build from Source and Install
 
 There are 2 different make files.
