@@ -5174,8 +5174,32 @@ void BuildAbsolutePath(char *file_name, char *folder_path, char *file_path_rtn)
     strcpy(file_path_rtn,folder_path);
     if(file_name[0] == '/' || file_name[0] == '\\')
         strcat(file_path_rtn,&file_name[1]);
-    else
-        strcat(file_path_rtn,file_name);
+    else {
+        /* expand the path using realpath */
+        char buf[4096];
+        char *last_ptr = strncpy(&buf[0], folder_path, sizeof(buf));
+        if (last_ptr > &buf[0]) {
+            if (*(last_ptr-1) != '/' && *(last_ptr-1) != '\\') {
+                *last_ptr = '/';
+                ++last_ptr;
+                *last_ptr = '\0';
+            }
+
+            last_ptr = strcat(last_ptr, file_name);
+
+            char * real_ptr = realpath(&buf[0], file_path_rtn);
+            if (file_path_rtn == real_ptr) {
+                return;
+            } else {
+                /* fallback to original behavior */
+                strcat(file_path_rtn,file_name);
+            }
+
+        } else {
+            /* fallback to original behavior */
+            strcat(file_path_rtn,file_name);
+        }
+    }
 }
 
 
