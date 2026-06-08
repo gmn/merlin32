@@ -5181,7 +5181,7 @@ void BuildAbsolutePath(char *file_name, char *folder_path, char *file_path_rtn)
     }
 
     /* append a trailing separator */
-    if (strlen(folder_path) < 1022) {
+    if (strlen(folder_path) <= 1022) {
         /* point to the \0 terminator */
         buf_ptr = folder_path + strlen(folder_path);
 
